@@ -2,15 +2,12 @@
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
-var number = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-var lowerCase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-var upperCase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var specialCharacters = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "=", "~", "<", ">", "?"];
+var number = "0123456789"
+var lowerCase = "abcdefghijklmnopqrstuvwxyz";
+var upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var specialCharacters = "!@#$%^&*()+=~<>?";
 
 var characters = [number, lowerCase, upperCase, specialCharacters];
-
-// console.log(passSplit)
-// String.fromCharCode(Math.floor(Math.random()* 10)+ 48))
 
 function writePassword() {
   var password = generatePassword();
@@ -20,57 +17,46 @@ function writePassword() {
     console.log("button clicked")
 
       var passValue = prompt("Choose the length of your password. 8-128");
+        
+      if (passValue < 8 || passValue > 128) {
+        alert("length must be between 8-128");
+        return "";
+      }
 
       var numberValue = confirm("Do you want numbers?");
-
       var upperCaseValue = confirm("Do you want Uppercase letters?");
-
+      var lowerCaseValue = confirm("Do you want Lowercase letters?");
       var specialCharactersValue = confirm("Do you want special characters?");
-
-      var charactersReturn = [lowerCase]
-
+      var charactersReturn = ""
+      var characterPasword = ""
+          
       if (numberValue) {
-        charactersReturn.push(number)
-      }else {
-
+        charactersReturn = charactersReturn.concat(number);
       }
 
+      if (lowerCaseValue) {
+        charactersReturn = charactersReturn.concat(lowerCase);
+      }
 
       if (upperCaseValue) {
-        charactersReturn.push(upperCase)
-      }else {
-
+        charactersReturn = charactersReturn.concat(upperCase);
       }
-
 
       if (specialCharactersValue) {
-        charactersReturn.push(specialCharacters)
-      }else {
-
+        charactersReturn = charactersReturn.concat(specialCharacters);
       }
 
+      console.log(charactersReturn)
 
-
-  // console.log((Math.floor(Math.random()* 10)+ 48))
-   
-   
-
-
-    
-    
-    
-    return charactersReturn;
-
-
+      for(i = 0; i < passValue; i++) {
+        var current = Math.floor(Math.random() * (charactersReturn.length));
+        characterPasword = characterPasword.concat(charactersReturn[current]);
+      }
+  
+    return characterPasword;
   }
-
-
-
-
   passwordText.value = password;
-
 }
-
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
